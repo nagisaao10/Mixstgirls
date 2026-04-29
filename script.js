@@ -2,11 +2,13 @@
 // 共通UI（ヘッダー・フッター）
 // ===============================
 function initCommonUI() {
-  console.log("ヘッダー処理開始");
+  console.log("ヘッダー・フッター処理開始");
 
   const header = document.getElementById("main-header");
+  const footer = document.getElementById("main-footer");
   const currentPath = window.location.pathname.split("/").pop() || "index.html";
 
+  // ヘッダー生成
   if (header) {
     header.innerHTML = `
       <a href="index.html" class="logo">
@@ -30,6 +32,26 @@ function initCommonUI() {
           </li>
         </ul>
       </nav>
+    `;
+  }
+
+  // フッター生成
+  if (footer) {
+    footer.innerHTML = `
+      <div class="footer-left">
+        <nav>
+          <ul>
+            <li><a href="index.html">TOP</a></li>
+            <li><a href="news.html">NEWS</a></li>
+            <li><a href="members.html">MEMBERS</a></li>
+            <li><a href="events.html">EVENTS</a></li>
+            <li><a href="schedule.html">SCHEDULE</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer-right">
+        <p class="copyright-text">© 2026 Mixstgirls Fan Site. All rights reserved.</p>
+      </div>
     `;
   }
 }
@@ -199,32 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
       initPages();
     });
 });
-
-er}</p></a></div>`
-  );
-
-  renderSimpleList(
-    ".events-list",
-    sorted.filter(i => i.type === "event"),
-    (item) => `<div class="list-item"><a href="${item.link || "#"}"><span class="list-date">${getDate(item).toLocaleDateString()}</span><p class="list-title">${item.title}</p></a></div>`
-  );
-}
-
-// ===============================
-// 初期化（超重要）
-// ===============================
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("Initialization started");
-
-  initCommonUI();
-
-  fetch("members.json")
-    .then(res => res.json())
-    .then(members => {
-      members.forEach(member => {
-        MEMBER_MAP[member.id] = member;
-      });
-      initPages();
+    initPages();
     })
     .catch(err => {
       console.error("Member data load failed:", err);
